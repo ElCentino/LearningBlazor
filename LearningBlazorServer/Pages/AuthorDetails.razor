@@ -1,0 +1,38 @@
+﻿@page "/authors/details/{authorId}"
+@using LearningBlazorServer.Data
+@using LearningBlazorServer.Interfaces  
+
+@inject IAuthorService authorService
+
+<h3>JK Rowlings</h3>
+<p>This is a book by JK Rowlings (@AuthorId)</p>
+<div class="row">
+    <div class="col-4">
+        Author Name
+    </div>
+    <div class="col-8">
+        @author.FirstName @author.LastName
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        Author Address
+    </div>
+    <div class="col-8">
+        @author.Address
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string AuthorId { get; set; }
+
+    Author author;
+
+    protected override void OnInitialized()
+    {
+        author = authorService.GetAuthorById(AuthorId);
+    }
+}

@@ -1,0 +1,37 @@
+﻿@page "/authors"
+@inject NavigationManager navigation
+@using LearningBlazorServer.Interfaces
+@using LearningBlazorServer.Data 
+@inject IAuthorService authorService
+
+<h3>Authors</h3>
+
+<br />
+<button class="btn btn-info" @onclick="NavigateTo">Got to author</button>
+
+@foreach(Author author in authors)
+{
+    <div class="col-12 row">
+        <div class="col-2">
+            <NavLink href=@string.Format("/authors/details/{0}", author.Id)>@author.Id</NavLink>
+        </div>
+        <div class="col-2">
+            @author.FirstName @author.LastName
+        </div>
+    </div>
+}
+
+@code {
+
+    List<Author> authors;
+
+    protected override void OnInitialized()
+    {
+        authors = authorService.GetAuthors();
+    }
+
+    private void NavigateTo()
+    {
+        navigation.NavigateTo("/authors/details/11");
+    }
+}
